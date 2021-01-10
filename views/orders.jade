@@ -1,0 +1,29 @@
+extends layout
+
+block content
+    div(class="content container" id="orders")
+        div(class="_head")
+            h2 Orders
+            include includes/search
+
+        div(class="_container")
+            div(class="order-card")
+                div(class="order-info")
+                    a(class="overlay" href=`orders/${id}`)
+                    p(class="id" style="text-align: right; color: #717171; font-size: 18px; padding: 5px") iqeukk-18278lk
+                    
+                    p Name:
+                        span(class="entry")=site.author
+                    p Email:
+                        span(class="entry")=site.email
+                    p Location:
+                        span(class="entry") Suite 12, PTI shopping complex, beside PTI computer village, PTI, 331122, Warri
+                    p No of Products: 
+                        span(class="entry")=orders.length
+                    p Total Price: 
+                        span(class="entry") $120.00
+
+                div(class="order-footer")
+                    button(class="primary-btn") View Order
+                    button(class="danger-btn ion-close")
+        

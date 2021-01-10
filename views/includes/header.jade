@@ -1,0 +1,55 @@
+doctype
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(author=site.author)
+        meta(name="keywords" content=site.keywords)
+        meta(name="description" content=site.description)
+
+        title= `${site.title} || ${pageTitle}`
+        link(rel="stylesheet" type="text/css" href="/ionicons/css/ionicons.min.css")
+        link(rel="stylesheet" type="text/css" href="/css/bootstrap.min.css")
+        link(rel='stylesheet' href='/css/style.css')
+
+    body
+        div(id="dashboard")
+            aside(class="side-bar")
+                div(class="_container")
+                    div(class="_head")
+                        div(class="logo")
+                            //- img(src="../../assets/img/logo-alt.png" alt="")
+
+                        div(class="_profile")
+                            div(class="_profile-img")
+                                img(src="/images/profile.jpg" alt="John Omorogbe" loading="lazy")
+                                span(class="notification ion-ios-bell")
+                                
+                            div
+                                h2= site.name
+                                span= site.email
+                                
+                                
+                    div(class="_content")
+                        ul(class="_nav")
+                            li(class={'active' : nav === 'analytics' || !nav})
+                                a(href="/" class="ion-arrow-graph-up-right")
+                                    span Analytics 
+                            li(class={'active' : nav==='orders'}) 
+                                a(href="/orders" class="ion-document-text")
+                                    span Orders
+                            li(class={'active' : nav==='products'})
+                                a(href="/products" class="ion-edit")
+                                    span Products
+                            li
+                                a(href="" class="ion-card")
+                                    span Edit Account Details
+                            li
+                                a(href="/settings" class="ion-gear-a")
+                                    span Settings
+                            li(class="log-out")
+                                a(href="" class="ion-log-out")
+                                    span Sign Out
+
+            main
+                block content
