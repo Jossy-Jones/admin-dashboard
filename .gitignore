@@ -106,3 +106,4 @@ dist
 # User Edit
 database
 bin
+.config

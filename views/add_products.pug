@@ -1,0 +1,36 @@
+extends layout
+
+block content
+    div(class="content" id="add-product")
+        div(class="_container")
+            div(class="_head")
+                h2 Add Products
+                span(class="ion-edit") Edit Account
+
+            form(class="addProduct" action="/json/product/create" method="post" enctype="multipart/form-data")
+                div(class="form-group")
+                    label Product Name
+                    input(type="text" name="name" required)
+
+                div(class="form-group")
+                    label(for="files") Product Images
+                    div(class="dropzone" id="uploadFile")
+                        input(type="file" id="files" name="image" hidden="true")
+
+                div(class="form-group")
+                    label(for="") Product Tags
+                    input(type="text", name="tags", placeholder="E.g: Tag A; Tag B; Tag C" required="false")
+
+                div(class="form-group")
+                    label(for="") Product Type
+                    select(name="product_type")
+                        option(value="" selected disabled) --- Select a product type ---
+                        option(value="TypeA") Type A
+                        option(value="TypeB") Type B
+
+                div(class="form-group")
+                    label() Product Description
+                    textarea(name="description", cols="30", rows="10", required)
+
+                div(class="form-submit")
+                    input(type="submit", value="Add Product", class="primary-btn")

@@ -1,0 +1,29 @@
+doctype
+html
+    head
+        meta(charset="utf-8")
+        meta(name="viewport" content="width=device-width, initial-scale=1.0")
+        meta(author=site.author)
+        meta(name="keywords" content=site.keywords)
+        meta(name="description" content=site.description)
+        base(href="public")
+        link(rel="shortcut icon" href="/images/image.svg")
+
+        title= `${site.title} | ${pageTitle}`
+
+        //- Style Links
+        link(rel="stylesheet" type="text/css" href="/ionicons/css/ionicons.min.css")
+        //- link(rel="stylesheet" type="text/css" href="/css/bootstrap.min.css") 
+        link(rel="stylesheet" type="text/css" href="/css/animate.css")
+        link(rel='stylesheet' href='/css/dropzone.css')
+        link(rel='stylesheet' href='/css/style.css')
+
+        //- Scripts
+        script(src="/js/dropzone.js" defer)
+        script(src="/js/main.js" defer)
+
+    body
+        div(id="dashboard")
+            include includes/header
+            main
+                block content

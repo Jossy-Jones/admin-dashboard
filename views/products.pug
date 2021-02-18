@@ -1,0 +1,26 @@
+extends layout
+
+block content
+    div(class="content" id="products")
+        div(class="_head")
+            h2 Products
+            include includes/search
+
+        div(class="_container" data-style="grid")
+            if(typeof(products) == 'object' && products.length > 0)
+                each product, key in products
+                    div(id=product.id class="product")
+                        a(href=`/products/${product.id}`)
+                        div(class="product-img")
+                            img(src=`/images/products/product-${key+1}.jpg`, alt="")
+                        div(class="product-info")
+                            h2=product.name
+                            p=product.description
+
+                        div(class="actions")
+                            button(class="ion-edit primary-btn")
+                                span(style="margin-left: 5px") Edit
+                            button(class="ion-trash-b danger-btn" onclick=`deleteProduct("${product.id}")`)
+                                span(style="margin-left: 5px") Delete
+            else 
+                p There is no product
