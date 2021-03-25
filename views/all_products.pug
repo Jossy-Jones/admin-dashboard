@@ -1,0 +1,51 @@
+extends layout
+
+block content
+    div(class="content" id="products")
+        div(class="_head")
+            h2 Products
+            include includes/search
+
+        div(class="panel")
+            div(class="sorts")
+                label(for="sort") Sort By:
+                select(name="sort" id="sort")
+                    option(value="name" selected={true : sort === "name" || !sort}) Name
+                    option(value="price" selected={true : sort === "price"}) Price
+                    //- option(value="")
+                    option(value="date" selected={true : sort === "date"}) Date
+
+            div(class="view")
+                input(type="checkbox", id="view", name="view", hidden)
+                label(for="view")
+                    span(class="ion-ios-list-outline")
+                    span(class="ion-ios-grid-view-outline")
+                    
+        div(class="_content")
+            div(class="_container" data-style="list")
+                if(typeof(products) == 'object' && products.length > 0)
+                    each product, key in products
+                        div(id=product.id class="product")
+                            a(href=`/products/${product.id}`)
+                            div(class="product-img")
+                                if(product.images && typeof(products.images == 'object' && products.images.length > 0))
+                                    img(src=`${product.images[0]}`, alt="")
+                                else 
+                                    img(src=`/images/products/product-${key+1}.jpg`, alt="")
+                                
+                            div(class="product-info")
+                                h2=(product.name || "No name")
+                                h3=(product.price || "No Price")
+                                p=(product.description || "No Description")
+
+                            div(class="actions")
+                                a(class="ion-edit primary-btn" href=`/products/${product.id}/edit`)
+                                    span(style="margin-left: 5px") Edit
+                                button(class="ion-trash-b danger-btn" onclick=`deleteProduct("${product.id}")`)
+                                    span(style="margin-left: 5px") Delete
+                else 
+                    p There is no product
+
+
+    script
+        include scripts/all_products.js

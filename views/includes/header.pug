@@ -16,22 +16,22 @@ aside(class="side-bar")
                     
         div(class="_content")
             ul(class="_nav")
-                li(class={'active' : nav === 'analytics' || !nav})
-                    a(href="/" class="ion-arrow-graph-up-right")
-                        span Analytics 
+                li(class={'active' : nav === 'home' || !nav})
+                    a(href="/" class="ion-home")
+                        span Overview 
                 li(class={'active' : nav==='orders'}) 
-                    a(href="/orders/all" class="ion-document-text")
+                    a(href="/orders/all" class="ion-bag")
                         span Orders
                 li(class={'active' : nav==='products'})
-                    a(href="/products/all" class="ion-edit")
+                    a(href="/products/all" class="ion-filing")
                         span Products
-                li
-                    a(href="" class="ion-card")
+                li(onclick="App.toast('neutral','Feature not added')")
+                    a(class="ion-edit")
                         span Edit Account Details
-                li
-                    a(href="/settings" class="ion-gear-a")
+                li(onclick="App.toast('secondary','Feature not added')")
+                    a(class="ion-gear-a")
                         span Settings
-                li(class="log-out")
-                    a(href="" class="ion-log-out")
+                li(class="log-out" onclick="App.toast('primary','Feature not added')")
+                    a(class="ion-log-out")
                         span Sign Out
 

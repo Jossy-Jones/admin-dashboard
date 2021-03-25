@@ -1,5 +1,20 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  div(class="content" id="overview")
+    div(class="card-container")
+      div(class="card")
+        div(class="_content")
+          h2 20
+          div(class="card-icon")
+            span(class="ion-filing")
+        div(class="_footer")
+          p Total Products
+
+      div(class="card")
+        div(class="_footer") 
+          p Total Orders
+
+      div(class="card")
+        div(class="_footer") 
+          p Total Sales

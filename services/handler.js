@@ -2,33 +2,74 @@
 
 // Dependecies
 const firebase = require('../database/firebase');
+const Orders = require('../models/db/orders');
 
 const Products = require('../models/db/products');
 
 let firebaseRef = firebase.database.ref("colbet/meals");
+const helpers = require("../helpers/helpers")
 
 const Handler = {}
 
-Handler.Home = async(req, res)=>{
+Handler.Home = async(req, res, next)=>{
+    // let products = await Products.getProducts();
+    // let orders = await Orders.getOrders();
     return res.render('index',{
-        pageTitle: 'Home'
-    })
+        pageTitle: 'Home',
+        nav: 'home',
+        // products: products,
+        // orders: orders
+    });
 }
 
 Handler.Orders = async(req, res)=>{
-    return res.render('orders',{
+    let orders = await Orders.getOrders();
+    return res.render('all_orders',{
         pageTitle: 'Orders',
         nav: 'orders',
-        orders: ['dajkds',"adjkdsad","dlakasdj"]
+        orders: orders
+    })
+}
+
+Handler.EditOrder = async(req,res)=>{
+    let orderId = req.params.orderId;
+    let orderData = await Orders.getOrder(orderId);
+    return res.render('id_order',{
+        pageTitle: `Order - ${orderId}`,
+        nav: 'orders',
+        order: orderData
     })
 }
 
 Handler.Products = async(req, res)=>{
-    let products = await Products.getProducts();
-    return res.render('products',{
+    let sort = typeof(req.query.sort) == "string" && ["name","price","date"].indexOf(req.query.sort) > -1 ? req.query.sort : false;
+    
+    if(sort){
+        let products = await Products.getProducts();
+        let sorted = helpers.orderObjectBy(products, sort);
+        console.log(sort);
+        return res.render('all_products',{
+            pageTitle: 'Products',
+            nav: 'products',
+            sort: sort,
+            products: sorted
+        })
+    } else {
+        let products = await Products.getProducts();
+        return res.render('all_products',{
+            pageTitle: 'Products',
+            nav: 'products',
+            products: products
+        })
+    }
+}
+
+Handler.sortProducts = async(req,res)=>{
+    console.log("sorted");
+    return res.render('all_products',{
         pageTitle: 'Products',
         nav: 'products',
-        products: products
+        products: sorted
     })
 }
 

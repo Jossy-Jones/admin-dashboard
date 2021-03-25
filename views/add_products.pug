@@ -7,7 +7,7 @@ block content
                 h2 Add Products
                 span(class="ion-edit") Edit Account
 
-            form(class="addProduct" action="/json/product/create" method="post" enctype="multipart/form-data")
+            form(class="addProduct" id="addProducts" method="post" action="/api/products/add")
                 div(class="form-group")
                     label Product Name
                     input(type="text" name="name" required)
@@ -20,6 +20,10 @@ block content
                 div(class="form-group")
                     label(for="") Product Tags
                     input(type="text", name="tags", placeholder="E.g: Tag A; Tag B; Tag C" required="false")
+                
+                div(class="form-group")
+                    label(for="") Product Price
+                    input(type="text", name="price", required)
 
                 div(class="form-group")
                     label(for="") Product Type
@@ -33,4 +37,8 @@ block content
                     textarea(name="description", cols="30", rows="10", required)
 
                 div(class="form-submit")
-                    input(type="submit", value="Add Product", class="primary-btn")
+                    input(type="submit", name="submit", value="Add Product", class="primary-btn")
+
+
+    script
+        include scripts/add_products.js

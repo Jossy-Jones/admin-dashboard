@@ -1,3 +1,6 @@
+// Dependecies
+// const moment = require("moment");
+
 module.exports.formatPrice = (cents) => {
     return `$${(cents / 100).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
 }
@@ -48,11 +51,31 @@ module.exports.getrandomId = (strLength) => {
 
 module.exports.orderObjectBy = (obj,name)=>{
     if(typeof(obj)=='object'){
+        name = name.toString().toLowerCase();
         obj.sort((a,b)=>{
-            let fir = a[name].toString().toLowerCase(), sec = b[name].toString().toLowerCase();
+            let fir = a[name] ? a[name].toString().toLowerCase() : "nill", sec = b[name] ? b[name].toString().toLowerCase() : "nill";
             return fir == sec ? 0 : fir > sec ? 1 : -1;
         })
+        return(obj)
     } else {
         throw new Error('param must be of object type');
     }
 }
+
+module.exports.sumOfList = (list)=>{
+    list = typeof(list) == "object" && list instanceof Array && list.length > 0 ? list : typeof(list) == "string" && list.trim().length > 0 ? list.trim() : false;
+    let num = (n) => isNaN(parseInt(n)) ? 0 : n;
+    if(list){
+        let result =  0;
+        list.forEach(data=>{
+            result = result + num(data);
+        })
+        return(result);
+    } else {
+        return 0
+    }
+}
+
+// module.exports.formatTime = (time, format) => {
+// 	return moment(time).format(format);
+// }

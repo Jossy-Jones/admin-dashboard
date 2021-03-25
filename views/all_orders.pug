@@ -1,0 +1,73 @@
+extends layout
+
+block content
+    div(class="content" id="orders")
+        div(class="_head")
+            h2 Orders
+            include includes/search
+
+        div(class="panel")
+            div(class="sorts")
+                label(for="sort") Sort By: 
+                select(name="sort" id="sort")
+                    option(value="name") Name
+                    option(value="price") Price
+                    //- option(value="")
+                    option(value="date") Date
+
+            div(class="view")
+                input(type="checkbox", id="view", name="view", hidden)
+                label(for="view")
+                    span(class="ion-ios-list-outline")
+                    span(class="ion-ios-grid-view-outline")
+                    
+        div(class="_content")
+            div(class="_container" data-style="grid")
+                div(class="_head" style="display: none")
+                    div(class="_cell") Order ID
+                    div(class="_cell") Name
+                    div(class="_cell") Contact
+                    div(class="_cell") Location
+                    div(class="_cell") Products
+                    div(class="_cell") Total Price
+                    div(class="_cell") Date of Order
+                    div(class="_cell") Actions
+                    
+                if(typeof(orders) == 'object' && orders.length > 0)
+                    each order, key in orders
+                        div(id=order.id class="order")
+                            //- a(href=`/orders/${order.id}`)
+                                
+                            div(class="order-info")
+                                p(class="id" title=(order.id) style="text-align: right; color: #717171; font-size: 18px; padding: 5px")=order.id
+
+                                p(title=order.name)
+                                    span(class="info") Name:
+                                    span(class="entry")=order.name
+                                p(title=(order.email || order.phone || "No contact found"))
+                                    span(class="info") contact:
+                                    span(class="entry")=(order.email || order.phone || "No contact found")
+                                p(title=(order.location || "No location found"))
+                                    span(class="info") Location:
+                                    span(class="entry")=(order.location || "No location found")
+                                p(title=((order.products.length) || "No Product(s)"))
+                                    span(class="info") No of Products: 
+                                    span(class="entry")=((order.products.length) || "Nil")
+                                p(title=(order.totalPrice || "0"))
+                                    span(class="info") Total Price: 
+                                    span(class="entry")=(order.totalPrice || "0")
+                                p(title=(order.date || "No Date"))
+                                    span(class="info") Date: 
+                                    span(class="entry")=(order.date || "-")
+
+                            div(class="actions")
+                                a(class="ion-edit primary-btn" href=`/orders/${order.id}/edit` title="Edit Order")
+                                    span(style="margin-left: 5px") Edit
+                                button(class="ion-trash-b danger-btn" onclick=`deleteOrder("${order.id}")` title="Delete Order")
+                                    span(style="margin-left: 5px") Delete
+                else 
+                    p There is no order
+
+
+    script
+        include scripts/all_orders.js
