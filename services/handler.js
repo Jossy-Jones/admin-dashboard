@@ -12,35 +12,20 @@ const helpers = require("../helpers/helpers")
 const Handler = {}
 
 Handler.Home = async(req, res, next)=>{
-    // let products = await Products.getProducts();
-    // let orders = await Orders.getOrders();
+    let products = await Products.getProducts();
+    let orders = await Orders.getOrders();
+    let sales = helpers.listFromObj(orders,"totalPrice");
+    let totalSale = helpers.formatNumber(helpers.sumOfList(sales));
     return res.render('index',{
         pageTitle: 'Home',
         nav: 'home',
-        // products: products,
-        // orders: orders
+        products: products,
+        orders: orders,
+        totalSale: totalSale
     });
 }
 
-Handler.Orders = async(req, res)=>{
-    let orders = await Orders.getOrders();
-    return res.render('all_orders',{
-        pageTitle: 'Orders',
-        nav: 'orders',
-        orders: orders
-    })
-}
-
-Handler.EditOrder = async(req,res)=>{
-    let orderId = req.params.orderId;
-    let orderData = await Orders.getOrder(orderId);
-    return res.render('id_order',{
-        pageTitle: `Order - ${orderId}`,
-        nav: 'orders',
-        order: orderData
-    })
-}
-
+// Products Handler
 Handler.Products = async(req, res)=>{
     let sort = typeof(req.query.sort) == "string" && ["name","price","date"].indexOf(req.query.sort) > -1 ? req.query.sort : false;
     
@@ -87,6 +72,41 @@ Handler.EditProduct = async(req, res)=>{
     return res.render('index',{
         pageTitle: `Product - ${productId}`,
         nav: 'products'
+    })
+}
+
+
+// Orders Handler
+Handler.Orders = async(req, res)=>{
+    let sort = typeof(req.query.sort) == "string" && ["id","name","totalPrice","location","date"].indexOf(req.query.sort) > -1 ? req.query.sort : false;
+    
+    if(sort){
+        let orders = await Orders.getOrders();
+        let sorted = helpers.orderObjectBy(orders, sort);
+        console.log(sort);
+        return res.render('all_orders',{
+            pageTitle: 'Orders',
+            nav: 'orders',
+            sort: sort,
+            orders: sorted
+        })
+    } else {
+        let orders = await Orders.getOrders();
+        return res.render('all_orders',{
+            pageTitle: 'Orders',
+            nav: 'orders',
+            orders: orders
+        })
+    }
+}
+
+Handler.OrderId = async(req,res)=>{
+    let orderId = req.params.orderId;
+    let order = await Orders.getOrder(orderId);
+    return res.render('id_order',{
+        pageTitle: `Order - ${orderId}`,
+        nav: 'orders',
+        order: order
     })
 }
 

@@ -3,18 +3,88 @@ extends layout
 block content
   div(class="content" id="overview")
     div(class="card-container")
+
       div(class="card")
         div(class="_content")
-          h2 20
           div(class="card-icon")
             span(class="ion-filing")
+          div(class="card-info")
+            span Total Products
+            h2=products.length
         div(class="_footer")
-          p Total Products
+          a(href="/products/all") View All
 
       div(class="card")
-        div(class="_footer") 
-          p Total Orders
-
+        div(class="_content")
+          div(class="card-icon")
+            span(class="ion-bag")
+          div(class="card-info")
+            span Total Orders
+            h2=orders.length
+        div(class="_footer")
+          a(href="/orders/all") View All
+      
       div(class="card")
-        div(class="_footer") 
-          p Total Sales
+        div(class="_content")
+          div(class="card-icon")
+            span(class="ion-cash")
+          div(class="card-info")
+            span Total Sales
+            h2=totalSale
+        div(class="_footer")
+          a(href="/orders/all?sort=totalPrice") View All
+
+
+    div(class="recent-orders" id="orders")
+      div(class="_head")
+        h2 Recent Orders
+
+      div(class="_content")
+        div(class="_container" data-style="list")
+                div(class="_head" style="display: none")
+                    div(class="_cell") Order ID
+                    div(class="_cell") Name
+                    div(class="_cell") Contact
+                    div(class="_cell") Location
+                    div(class="_cell") Products
+                    div(class="_cell") Total Price
+                    div(class="_cell") Date of Order
+                    div(class="_cell") Actions
+                    
+                if(typeof(orders) == 'object' && orders.length > 0)
+                    each order, key in orders
+                        div(id=order.id class="order")
+                            //- a(href=`/orders/${order.id}`)
+                                
+                            div(class="order-info")
+                                p(class="id" title=(order.id) style="text-align: right; color: #717171; font-size: 18px; padding: 5px")=order.id
+
+                                p(title=order.name)
+                                    span(class="info") Name:
+                                    span(class="entry")=order.name
+                                p(title=(order.email || order.phone || "No contact found"))
+                                    span(class="info") contact:
+                                    span(class="entry")=(order.email || order.phone || "No contact found")
+                                p(title=(order.location || "No location found"))
+                                    span(class="info") Location:
+                                    span(class="entry")=(order.location || "No location found")
+                                p(title=((order.products.length) || "No Product(s)"))
+                                    span(class="info") No of Products: 
+                                    span(class="entry")=((order.products.length) || "Nil")
+                                p(title=(order.totalPrice || "0"))
+                                    span(class="info") Total Price: 
+                                    span(class="entry")=(order.totalPrice || "0")
+                                p(title=(order.date || "No Date"))
+                                    span(class="info") Date: 
+                                    span(class="entry")=(order.date || "-")
+
+                            div(class="actions")
+                                a(class="ion-edit primary-btn" href=`/orders/${order.id}` title="Edit Order")
+                                    span(style="margin-left: 5px") Edit
+                                button(class="ion-trash-b danger-btn" onclick=`deleteOrder("${order.id}")` title="Delete Order")
+                                    span(style="margin-left: 5px") Delete
+                else 
+                    p There is no recent order
+
+
+

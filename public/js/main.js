@@ -2,64 +2,6 @@
 
 const App = (function app(){
 
-    const filesUpload = [];
-
-    // DropZone Implementations
-    function uploadFiles(){
-        let uploadFile = document.querySelector("#uploadFile");
-        if (uploadFile) {
-            Dropzone.autoDiscover = false;
-            let defaultMessage = `<div class="uploadMessage"><img src="/images/image.svg" ><p>Add Product Images<br>(You can add up to 5)</p></div>`;
-    
-            let dropzone = new Dropzone(uploadFile, {
-                paramName: "image",
-                maxFilesize: 2, //MB
-                maxFiles: 5, //Number of file allowed
-                acceptedFiles: "image/*",
-                url: '/api/products/images/add',
-                dictDefaultMessage: defaultMessage,
-                enctype: "multipart/form-data",
-    
-    
-                addRemoveLinks: true,
-                // dictRemoveFileConfirmation: "",
-    
-                init: function(){
-                    this.on("sending", (file, xhr, formData) => {
-    
-                        // formData.append("images", file);
-                        // console.log(formData);
-                    });
-                    
-                    this.on("success", (file, resp) => {
-                        filesUpload.push(resp.message);
-                        console.log(filesUpload);
-                    });
-                    this.on('thumbnail', function (file) {
-                        if (file.accepted !== false) {
-                            if (file.width < 640 || file.height < 480) {
-                                file.rejectDimensions();
-                            }
-                            else {
-                                file.acceptDimensions();
-                            }
-                        }
-                    });
-                    this.on("removedfile", (file)=>{
-                        this.url = "/api/product/images/remove"
-                        console.log(file);
-                    })
-                },
-                accept: function (file, done) {
-                    file.acceptDimensions = done;
-                    file.rejectDimensions = function () {
-                        done('The image must be at least 640 x 480px')
-                    };
-                }
-            });
-        }
-    }
-
     // Actions Handling
     function actionHandling(method,url,dest){
         method = typeof(method) == "string" && ["post","get","put","delete"].indexOf(method) > -1 ? method.toUpperCase() : "get";
@@ -253,8 +195,7 @@ const App = (function app(){
     }
 
     function init() {
-        // Initialize the upload system
-        uploadFiles();
+        // Initialize the viewStyle
         viewStyle("list");
     };
 
@@ -265,7 +206,6 @@ const App = (function app(){
         action: actionHandling,
         form: formHandling,
         processForms,
-        filesUpload
     };
 
     return publicFunc;

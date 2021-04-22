@@ -24,3 +24,21 @@ function deleteProduct(params){
     // console.log(params);
     App.action('delete',`/api/products/${params}/delete`,'/products/all');
 }
+
+// Add button scroll effects
+let add = document.querySelector("#add-btn");
+let container = document.querySelector("main");
+if(add){
+    let current = container.offsetHeight;
+    container.addEventListener("scroll", (e)=>{
+        let scroll =  container.scrollTop;
+        let height = container.scrollHeight;
+        if(scroll != 0 && height != (scroll+current)){
+            add.style.opacity="1";
+            add.style.visibility="visible";
+        } else if(scroll == 0 || height == (scroll+current)) {
+            add.style.opacity="0";
+            add.style.visibility="hidden";
+        }
+    })
+}

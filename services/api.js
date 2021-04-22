@@ -35,10 +35,11 @@ Api.createProduct = async (req,res)=>{
             "description": description,
             "price": price,
             "type": type,
-            "tags": tags
+            "tags": tags,
+            date: Date.now()
         }
         Products.createProduct(productId, productData).then(data=>{
-            res.json({message: data, status: 200});
+            res.json({message: "success", data, status: 200});
         }).catch(err=>{
             res.json({message: err, status: 400})
         });
@@ -51,7 +52,7 @@ Api.createProduct = async (req,res)=>{
 
 Api.getProductAll = async(req, res) => {
     Products.getProducts().then(data=>{
-        res.json({message: data, status: 200});
+        res.json({message: "success", data, status: 200});
     }).catch(err=>{
         res.json({message: err, status: 404})
     })
@@ -60,7 +61,7 @@ Api.getProductAll = async(req, res) => {
 Api.getProduct = async(req,res)=>{
     let productId = req.params.productId;
     Products.getProduct(productId).then(data=>{
-        res.json({message: data, status: 200})
+        res.json({message: "success", data, status: 200})
     }).catch(err=>{
         res.json({message: err, status: 404})
     })
@@ -70,7 +71,7 @@ Api.updateProduct = async(req,res)=>{
     let productId = req.params.productId;
     let productData = {name : "This is a funny testing"}
     Products.editProduct(productId, productData).then(data=>{
-        res.json({message: data, status: 200});
+        res.json({message: "success", data, status: 200});
     }).catch(err=>{
         res.json({message: err, status: 500});
     })
@@ -80,7 +81,7 @@ Api.removeProduct = async(req,res)=>{
     let productId = typeof(req.params.productId) == "string" && req.params.productId.trim().length > 0 ? req.params.productId.trim() : false;
     if(productId && productId !== ("undefined" || "null")){
         Products.removeProduct(productId).then(data => {
-            res.json({message: data, status: 200});
+            res.json({message: "success", data, status: 200});
         }).catch(err=>{
             res.json({message: err, status: 400});
         })
@@ -95,7 +96,7 @@ Api.addImages = async(req,res)=>{
         console.log(req.file);
         let fileName = req.file.originalname;
         Products.addImages(req.file).then(data => {
-            res.json({message: data, status: 200});
+            res.json({message: "success", data, status: 200});
         }).catch(err=>{
             res.json({message: err, status: 400});
         })
@@ -142,7 +143,8 @@ Api.createOrder = async(req,res)=>{
             phone,
             products,
             totalPrice: total, //Cross check totalprice
-            location
+            location,
+            date: Date.now()
         }
         Orders.createOrder(orderId, orderData).then(msg=>{
             res.json({message: msg, data: orderId, status: 200});
@@ -161,7 +163,7 @@ Api.getOrderAll = async(req,res)=>{
 Api.getOrder = async(req,res)=>{
     let orderId = req.params.orderId;
     Orders.getOrder(orderId).then(payload=>{
-        res.json({message: payload.msg, data: payload.data, status: 200})
+        res.json({message: "success", data: payload, status: 200})
     }).catch(err=>{
         res.json({message: err, data: null, status: 400});
     })

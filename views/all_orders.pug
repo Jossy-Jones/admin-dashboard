@@ -10,10 +10,13 @@ block content
             div(class="sorts")
                 label(for="sort") Sort By: 
                 select(name="sort" id="sort")
-                    option(value="name") Name
-                    option(value="price") Price
+                    option(value="id" selected={true : sort === "id"}) Order Id
+                    option(value="name" selected={true : sort === "name"}) Name
+                    option(value="location" selected={true : sort === "location"}) Location
+                    option(value="totalPrice" selected={true : sort === "totalPrice"}) Total Price
+                    option(value="date" selected={true : sort === "date" || !sort}) Date
                     //- option(value="")
-                    option(value="date") Date
+                    
 
             div(class="view")
                 input(type="checkbox", id="view", name="view", hidden)
@@ -61,7 +64,7 @@ block content
                                     span(class="entry")=(order.date || "-")
 
                             div(class="actions")
-                                a(class="ion-edit primary-btn" href=`/orders/${order.id}/edit` title="Edit Order")
+                                a(class="ion-edit primary-btn" href=`/orders/${order.id}` title="Edit Order")
                                     span(style="margin-left: 5px") Edit
                                 button(class="ion-trash-b danger-btn" onclick=`deleteOrder("${order.id}")` title="Delete Order")
                                     span(style="margin-left: 5px") Delete

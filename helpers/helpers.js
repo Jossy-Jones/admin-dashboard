@@ -76,6 +76,38 @@ module.exports.sumOfList = (list)=>{
     }
 }
 
+module.exports.listFromObj = (obj,list)=>{
+    obj = typeof(obj) == "object" ? obj : {};
+    list = typeof(list) == "string" ? list.trim() : false;
+    if(obj && list){
+        let result = [];
+        obj.map(item=>{
+            result.push(item[list])
+        });
+        return result;
+    } else {
+        console.log("null");
+        return "Not found!";
+    }
+}
+
+module.exports.formatNumber = (num)=>{
+    num = typeof(num) == "string" || "number" ? Math.abs(parseInt(num)) : false;
+    let log = Math.log(num)/Math.log(10);
+    let base = {
+        "k": 3,
+        "m": 6,
+        "b": 9,
+        "t": 12,
+        "q": 15
+    }
+    if(log < 3){
+        return(num)
+    } else if(num > 3){
+        return `${(num/1000).toFixed(2)}k`;
+    }
+}
+
 // module.exports.formatTime = (time, format) => {
 // 	return moment(time).format(format);
 // }

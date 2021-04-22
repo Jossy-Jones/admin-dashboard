@@ -8,7 +8,7 @@ const mainHandler = require('../services/handler');
 let staticApi = {
     '/': mainHandler.Home,
     '/orders/all': mainHandler.Orders,
-    'orders/:orderId': mainHandler.EditOrder,
+    '/orders/:orderId': mainHandler.OrderId,
     '/products/all': mainHandler.Products,
     '/products/add': mainHandler.AddProducts,
     '/products/:productId': mainHandler.EditProduct,

@@ -47,12 +47,14 @@ Orders.getOrders = ()=>{
 
 Orders.getOrder = (orderId)=>{
     return new Promise((resolve, reject) => {
-        orderRef.child(orderId).on("value", snapshot=>{
-            if(snapshot.exists() && snapshot.val() !== null) {
-                resolve({msg: "success", data: snapshot.val()});
+        orderRef.child(orderId).on("value", (snapshot)=>{
+            if(snapshot.val()) {
+                resolve(snapshot.val());
             } else {
                 reject(`No info found on this orderId: ${orderId}`);
             };
+        },(err)=>{
+            reject(`An Error occurred; ${err}`);
         })
     }).catch(e=>{
         return(e);
