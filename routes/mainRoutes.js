@@ -4,9 +4,6 @@ const router = express.Router();
 const path = require('path');
 const url = require('url');
 
-// Middlewares
-const FileUpload = require('../middlewares/fileUploads')
-
 // Api Routes
 const statics = require("./static")
 const products = require("./products");
